@@ -1,4 +1,3 @@
-
 SELECT TOP 1
     P.ProductName
 FROM dbo.[Order Details] OD, dbo.Orders O, dbo.Products P

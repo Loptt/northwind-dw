@@ -33,7 +33,6 @@ create table DimEmployee
     hiredate datetime,
     primary key (EmployeeID)
 );
-
 Create table DimTime
 (
 

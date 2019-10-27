@@ -16,3 +16,6 @@ from DWNorthwind.dbo.DimProduct p
 
 SELECT c.City, c.Country, c.CustomerID, c.CustomerName, c.Region
 from DWNorthwind.dbo.DimCustomer c
+
+SELECT *
+FROM DWNorthwind.dbo.FactSales

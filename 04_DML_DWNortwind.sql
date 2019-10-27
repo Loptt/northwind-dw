@@ -17,7 +17,7 @@ UPDATE DWNorthwind.dbo.DimEmployee SET Region='Unknown' WHERE Country IS NULL;
 
 --dimension Tiempo
 Insert into DWNorthwind.dbo.DimTime
-SELECT o.OrderDate
+SELECT DISTINCT o.OrderDate
 FROM Lab0_NorthwindDB.dbo.Orders o;
 
 --dimension Cliente

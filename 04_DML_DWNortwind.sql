@@ -1,33 +1,44 @@
+--dimension Producto
+Insert into DWNorthwind.dbo.DimProduct
+SELECT p.productId, p.productName, c.categoryName
+FROM Lab0_NorthwindDB.dbo.products p, Lab0_NorthwindDB.dbo.categories c
+WHERE p.categoryID=c.categoryID;
+
+--dimension Empleado
+Insert into DWNorthwind.dbo.DimEmployee
+SELECT e.EmployeeID, e.FirstName + ' ' + e.LastName as Name, e.City, e.Country, e.Region, e.HireDate
+FROM Lab0_NorthwindDB.dbo.Employees e;
+
+--Limpieza
+UPDATE DWNorthwind.dbo.DimEmployee SET Region='Europe' WHERE Country IN ('UK', 'Finland','Italy','Germany','Switzerland','Sweden','Austria','Poland','Ireland','Norway','France','Belgium','Spain','Denmark','Portugal');
+UPDATE DWNorthwind.dbo.DimEmployee SET Region='North America' WHERE Country IN ('USA','Canada');
+UPDATE DWNorthwind.dbo.DimEmployee SET Region='South America' WHERE Country IN ('Mexico','Brazil','Argentina','Venezuela');
+UPDATE DWNorthwind.dbo.DimEmployee SET Region='Unknown' WHERE Country IS NULL;
+
+--dimension Tiempo
+Insert into DWNorthwind.dbo.DimTime
+SELECT o.OrderDate
+FROM Lab0_NorthwindDB.dbo.Orders o;
+
+--dimension Cliente
+INSERT into DWNorthwind.dbo.DimCustomer
+SELECT c.CustomerID, c.ContactName, c.City, c.Country , c.Region
+FROM Lab0_NorthwindDB.dbo.Customers c;
+
+--Limpieza
+UPDATE DWNorthwind.dbo.DimCustomer SET Region='Europe' WHERE Country IN ('UK', 'Finland','Italy','Germany','Switzerland','Sweden','Austria','Poland','Ireland','Norway','France','Belgium','Spain','Denmark','Portugal');
+UPDATE DWNorthwind.dbo.DimCustomer SET Region='North America' WHERE Country IN ('USA','Canada');
+UPDATE DWNorthwind.dbo.DimCustomer SET Region='South America' WHERE Country IN ('Mexico','Brazil','Argentina','Venezuela');
+UPDATE DWNorthwind.dbo.DimCustomer SET Region='Unknown' WHERE Country IS NULL;
 
 
---poblar tablas de modelo multidimensional (NorthWindDW) a partir de base de datos operacional (Northwind)*/
-
---dimension producto
-Insert into DimProduct
-   select p.productId, p.productName, c.categoryName
-   from Northwind.dbo.products p, Northwind.dbo.categories c
-   where p.categoryID=c.categoryID;
-
-
-Insert into DIMemployee
-   select e.EmployeeID, e.FirstName + ' ' + e.LastName as Name, e.City, e.Country, e.Region,e.HireDate
-   from Northwind.dbo.Employees e;
-   
-   
---ejemplo de limpieza de datos, en Region y Country hay anomalias como valores nulos 
-update DIMemployee set Region='Europe' where Country = 'UK';
-
---falta poblar customer.
---DimTime ya la poblamos 
-
-
---  tablas de hechos
-Insert into FactSales
-select od.ProductID, o.EmployeeID, o.CustomerID, o.OrderDate , 
-o.orderID, od.quantity, od.unitPrice, 
-od.discount, 
-od.unitPrice * od.quantity * od.discount , 
-od.unitPrice * od.quantity - od.unitPrice * od.quantity * od.discount   
-from Northwind.dbo.Orders o, Northwind.dbo.[Order Details] od 
-where o.OrderID = od.OrderID;
+-- Tabla de Hechos
+Insert into DWNorthwind.dbo.FactSales
+SELECT od.ProductID, o.EmployeeID, o.CustomerID, o.OrderDate ,
+   o.orderID, od.quantity, od.unitPrice,
+   od.discount,
+   od.unitPrice * od.quantity * od.discount ,
+   od.unitPrice * od.quantity - od.unitPrice * od.quantity * od.discount
+FROM Lab0_NorthwindDB.dbo.Orders o, Lab0_NorthwindDB.dbo.[Order Details] od
+WHERE o.OrderID = od.OrderID;
 

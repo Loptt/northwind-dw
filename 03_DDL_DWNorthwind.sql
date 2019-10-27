@@ -1,12 +1,8 @@
 
 /* Northwind Data Warehouse ya debe estar creada */
 create database DWNorthwind
-
 go
-
 use DWNorthwind
-
-/* Creacion de una dimension. Agregue los campos que hagan falta de acuerdo a lo que indicamos en clase.*/
 create table DimProduct
 (
     ProductID int,
@@ -15,7 +11,6 @@ create table DimProduct
     primary key (ProductID)
 )
 
-/*FALATAN LAS OTRAS Dimensiones: Clientes, Empleados  */
 create table DimCustomer
 (
 
@@ -38,6 +33,7 @@ create table DimEmployee
     hiredate datetime,
     primary key (EmployeeID)
 );
+
 Create table DimTime
 (
 
@@ -45,10 +41,6 @@ Create table DimTime
     primary key (orderDate)
 );
 
-
-
---tabla de Hechos FACT SALES puede ser necesario agregar-quitar columnas
--- OrderId  es necesario solo para efectos de la carga de los datos
 create table FactSales
 (
     ProductID int ,

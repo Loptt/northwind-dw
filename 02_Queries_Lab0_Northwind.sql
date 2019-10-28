@@ -1,3 +1,7 @@
+
+USE Lab0_NorthwindDB
+GO
+
 SELECT TOP 1
     P.ProductName
 FROM dbo.[Order Details] OD, dbo.Orders O, dbo.Products P
@@ -36,3 +40,9 @@ WHERE O.OrderID = OD.OrderID AND e.EmployeeID = O.EmployeeID AND e.Region =
 )
 GROUP BY e.Country
 ORDER BY SUM(OD.UnitPrice * OD.Quantity * (1 - OD.Discount)) DESC;
+
+SELECT e.Region, e.Country, SUM(OD.UnitPrice * OD.Quantity * (1 - OD.Discount)) AS TotalSales
+FROM dbo.Orders O, dbo.[Order Details] OD, dbo.Employees e
+WHERE O.OrderID = OD.OrderID AND e.EmployeeID = O.EmployeeID
+GROUP BY e.Region, e.Country
+ORDER BY e.Region, e.Country

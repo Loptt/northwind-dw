@@ -32,3 +32,6 @@ WHERE YEAR(FS.OrderDate) = 1996
 SELECT SUM(FS.Quantity) AS [Total Sales 1997]
 FROM dbo.[FactSales] FS
 WHERE YEAR(FS.OrderDate) = 1997;
+
+SELECT SUM(FS.Total) AS [Total Sales]
+FROM dbo.[FactSales] FS

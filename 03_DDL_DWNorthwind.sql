@@ -30,6 +30,7 @@ create table DimEmployee
     City varchar (15),
     Country varchar (15),
     Region varchar (15),
+    Subregion varchar(15),
     hiredate datetime,
     primary key (EmployeeID)
 );

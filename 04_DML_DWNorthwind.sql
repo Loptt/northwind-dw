@@ -6,14 +6,17 @@ WHERE p.categoryID=c.categoryID;
 
 --dimension Empleado
 Insert into DWNorthwind.dbo.DimEmployee
-SELECT e.EmployeeID, e.FirstName + ' ' + e.LastName as Name, e.City, e.Country, e.Region, e.HireDate
+   (EmployeeID,Name,City,Country,hiredate,Subregion)
+SELECT e.EmployeeID, e.FirstName + ' ' + e.LastName as Name, e.City, e.Country, e.HireDate, e.Region
 FROM Lab0_NorthwindDB.dbo.Employees e;
 
 --Limpieza
 UPDATE DWNorthwind.dbo.DimEmployee SET Region='Europe' WHERE Country IN ('UK', 'Finland','Italy','Germany','Switzerland','Sweden','Austria','Poland','Ireland','Norway','France','Belgium','Spain','Denmark','Portugal');
-UPDATE DWNorthwind.dbo.DimEmployee SET Region='North America' WHERE Country = 'Canada';
-UPDATE DWNorthwind.dbo.DimEmployee SET Region='USA' WHERE Region IS NULL AND Country = 'USA';
+UPDATE DWNorthwind.dbo.DimEmployee SET Region='North America' WHERE Country IN ('Canada');
 UPDATE DWNorthwind.dbo.DimEmployee SET Region='South America' WHERE Country IN ('Mexico','Brazil','Argentina','Venezuela');
+UPDATE DWNorthwind.dbo.DimEmployee SET Region ='USA' WHERE Country = 'USA';
+UPDATE DWNorthwind.dbo.DimEmployee SET Subregion = Country WHERE Country NOT IN ('USA');
+UPDATE DWNorthwind.dbo.DimEmployee SET Subregion = 'Unknown' WHERE Subregion IS NULL;
 UPDATE DWNorthwind.dbo.DimEmployee SET Region='Unknown' WHERE Country IS NULL;
 
 --dimension Tiempo
@@ -42,4 +45,3 @@ SELECT od.ProductID, o.EmployeeID, o.CustomerID, o.OrderDate ,
    od.unitPrice * od.quantity - od.unitPrice * od.quantity * od.discount
 FROM Lab0_NorthwindDB.dbo.Orders o, Lab0_NorthwindDB.dbo.[Order Details] od
 WHERE o.OrderID = od.OrderID;
-

@@ -12,7 +12,7 @@ FROM Lab0_NorthwindDB.dbo.Employees e;
 --Limpieza
 UPDATE DWNorthwind.dbo.DimEmployee SET Region='Europe' WHERE Country IN ('UK', 'Finland','Italy','Germany','Switzerland','Sweden','Austria','Poland','Ireland','Norway','France','Belgium','Spain','Denmark','Portugal');
 UPDATE DWNorthwind.dbo.DimEmployee SET Region='North America' WHERE Country = 'Canada';
-UPDATE DWNorthwind.dbo.DimEmployee SET Region='USA' WHERE Region IS NOT NULL AND Country = 'USA';
+UPDATE DWNorthwind.dbo.DimEmployee SET Region='USA' WHERE Region IS NULL AND Country = 'USA';
 UPDATE DWNorthwind.dbo.DimEmployee SET Region='South America' WHERE Country IN ('Mexico','Brazil','Argentina','Venezuela');
 UPDATE DWNorthwind.dbo.DimEmployee SET Region='Unknown' WHERE Country IS NULL;
 
